@@ -9,3 +9,8 @@ A simple drag n' drop CSV viewer in the browser.  A connect server serves up the
 
 Then open `localhost:1234` in your browser and view your CSVssssssssssss.
 
+
+# Pete's Instructions
+Start Server: nodemon app.coffee
+Compile Coffeescript: coffee --watch --compile ./public/javascripts/*.coffee
+Redis: redis-server

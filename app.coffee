@@ -28,15 +28,32 @@ app.use (err, req, res, next) ->
   console.error err.stack
   res.send 500, 'Something broke!'
 
-# app.get '/', (req, res) ->
-#   res.send(req.online.length + ' users online')
-
 app.post '/upload', (req, res) ->
   json = []
   csv().from.stream(fs.createReadStream(req.files["csv"].path)).on("record", (row, index) ->
-    json.push row
+    saveToDB JSON.stringify(row)
   ).on "end", ->
-    res.send JSON.stringify(json)
+    people = getPeople()
+    console.log "@@@@@@@@@@ ALL MEMBERS: #{people}"    
+    res.send people
+
+saveToDB = (row) ->
+  db.sadd('people', row)
+
+removeFromDB = (row) ->
+  db.srem('people', row)
+
+getPeople = ->
+  people = []
+  db.smembers 'people', (err, response) =>
+    for person in response
+      people.push person
+
+    console.log "@@@@@@@ Response: #{people}"
+    return people
+
 
 app.listen 3000
 console.log 'Listening on port 3000'
+
+

@@ -46,6 +46,7 @@ handelFiles = (files) ->
         xhr.onreadystatechange = ->
           
           # Parse the response and build the table
+          console.log JSON.parse(xhr.responseText)
           buildTable file, JSON.parse(xhr.responseText) if xhr.readyState is 4
 
         # Attach our file to the FormData object

@@ -32,6 +32,7 @@
           xhr = new XMLHttpRequest();
           fd = new FormData();
           xhr.onreadystatechange = function() {
+            console.log(JSON.parse(xhr.responseText));
             if (xhr.readyState === 4) {
               return buildTable(file, JSON.parse(xhr.responseText));
             }
